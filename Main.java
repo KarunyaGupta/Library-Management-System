@@ -2,135 +2,141 @@ import java.util.Scanner;
 import java.util.List;
 
 public class Main {
-    private Library library;
-    private Scanner scanner;
+    private static Library library;
+    private static Scanner scanner;
 
-    public Main() {
+    public static void main(String[] args) {
+        DataManager.initialize();
         library = new Library();
         scanner = new Scanner(System.in);
-        initializeLibrary();
-    }
 
-    private void initializeLibrary() {
-        // Add some initial books and members for testing
-        library.addBook(new Book("1234", "Java Programming", "John Doe", "Programming"));
-        library.addBook(new Book("5678", "Python Basics", "Jane Smith", "Programming"));
-        library.addMember(new Member("M001", "Alice"));
-    }
+        // Add sample data
+        initializeSampleData();
 
-    public void start() {
         while (true) {
-            displayMenu();
+            showMainMenu();
             int choice = getIntInput("Enter your choice: ");
             
             switch (choice) {
-                case 1: addBook(); break;
-                case 2: addMember(); break;
-                case 3: borrowBook(); break;
-                case 4: returnBook(); break;
-                case 5: searchBooks(); break;
-                case 6: reserveBook(); break;
-                case 7: payFine(); break;
-                case 8: System.out.println("Goodbye!"); return;
+                case 1: searchBooks(); break;
+                case 2: borrowBook(); break;
+                case 3: returnBook(); break;
+                case 4: showMemberDetails(); break;
+                case 5: addNewBook(); break;
+                case 6: addNewMember(); break;
+                case 0: System.exit(0); break;
                 default: System.out.println("Invalid choice!");
             }
         }
     }
 
-    private void displayMenu() {
+    private static void showMainMenu() {
         System.out.println("\n=== Library Management System ===");
-        System.out.println("1. Add Book");
-        System.out.println("2. Add Member");
-        System.out.println("3. Borrow Book");
-        System.out.println("4. Return Book");
-        System.out.println("5. Search Books");
-        System.out.println("6. Reserve Book");
-        System.out.println("7. Pay Fine");
-        System.out.println("8. Exit");
+        System.out.println("1. Search Books");
+        System.out.println("2. Borrow Book");
+        System.out.println("3. Return Book");
+        System.out.println("4. Member Details");
+        System.out.println("5. Add New Book");
+        System.out.println("6. Add New Member");
+        System.out.println("0. Exit");
     }
 
-    private void addBook() {
-        System.out.println("\n=== Add Book ===");
-        String isbn = getStringInput("Enter ISBN: ");
-        String title = getStringInput("Enter Title: ");
-        String author = getStringInput("Enter Author: ");
-        String category = getStringInput("Enter Category: ");
-        
-        library.addBook(new Book(isbn, title, author, category));
-        System.out.println("Book added successfully!");
-    }
-
-    private void addMember() {
-        System.out.println("\n=== Add Member ===");
-        String id = getStringInput("Enter Member ID: ");
-        String name = getStringInput("Enter Name: ");
-        
-        library.addMember(new Member(id, name));
-        System.out.println("Member added successfully!");
-    }
-
-    private void borrowBook() {
-        System.out.println("\n=== Borrow Book ===");
-        String isbn = getStringInput("Enter Book ISBN: ");
-        String memberId = getStringInput("Enter Member ID: ");
-        
-        boolean success = library.borrowBook(isbn, memberId);
-        System.out.println(success ? "Book borrowed successfully!" : "Failed to borrow book!");
-    }
-
-    private void returnBook() {
-        System.out.println("\n=== Return Book ===");
-        String isbn = getStringInput("Enter Book ISBN: ");
-        String memberId = getStringInput("Enter Member ID: ");
-        
-        boolean success = library.returnBook(isbn, memberId);
-        System.out.println(success ? "Book returned successfully!" : "Failed to return book!");
-    }
-
-    private void searchBooks() {
-        System.out.println("\n=== Search Books ===");
+    private static void searchBooks() {
         String query = getStringInput("Enter search term: ");
-        
         List<Book> results = library.searchBooks(query);
-        if (results.isEmpty()) {
-            System.out.println("No books found!");
-        } else {
-            System.out.println("Found books:");
-            results.forEach(b -> System.out.println(b.getTitle() + " by " + b.getAuthor() + 
-                " [" + (b.isAvailable() ? "Available" : "Not Available") + "]"));
+        
+        System.out.println("\nSearch Results:");
+        for (Book book : results) {
+            System.out.printf("ISBN: %s, Title: %s, Author: %s, Available: %s\n",
+                book.getIsbn(), book.getTitle(), book.getAuthor(), 
+                book.isAvailable() ? "Yes" : "No");
         }
     }
 
-    private void reserveBook() {
-        System.out.println("\n=== Reserve Book ===");
-        String isbn = getStringInput("Enter Book ISBN: ");
-        String memberId = getStringInput("Enter Member ID: ");
+    private static void borrowBook() {
+        String isbn = getStringInput("Enter book ISBN: ");
+        String memberId = getStringInput("Enter member ID: ");
         
-        boolean success = library.reserveBook(isbn, memberId);
-        System.out.println(success ? "Book reserved successfully!" : "Failed to reserve book!");
+        if (library.borrowBook(isbn, memberId)) {
+            System.out.println("Book borrowed successfully!");
+        } else {
+            System.out.println("Failed to borrow book. Please check ISBN and member ID.");
+        }
     }
 
-    private void payFine() {
-        System.out.println("\n=== Pay Fine ===");
-        String memberId = getStringInput("Enter Member ID: ");
+    private static void returnBook() {
+        String isbn = getStringInput("Enter book ISBN: ");
+        String memberId = getStringInput("Enter member ID: ");
+        
+        if (library.returnBook(isbn, memberId)) {
+            System.out.println("Book returned successfully!");
+            Member member = library.findMember(memberId);
+            if (member != null) {
+                System.out.printf("Fine amount: $%.2f\n", member.getFineAmount());
+            }
+        } else {
+            System.out.println("Failed to return book. Please check ISBN and member ID.");
+        }
+    }
+
+    private static void showMemberDetails() {
+        String memberId = getStringInput("Enter member ID: ");
         Member member = library.findMember(memberId);
         
         if (member != null) {
-            System.out.println("Current fine: $" + member.getFineAmount());
-            double amount = getDoubleInput("Enter amount to pay: ");
-            member.payFine(amount);
-            System.out.println("Remaining fine: $" + member.getFineAmount());
+            System.out.println("\nMember Details:");
+            System.out.println("ID: " + member.getMemberId());
+            System.out.println("Name: " + member.getName());
+            System.out.println("Fine Amount: $" + member.getFineAmount());
+            System.out.println("Borrowed Books:");
+            for (Book book : member.getBorrowedBooks()) {
+                System.out.printf("- %s by %s (Due: %s)\n", 
+                    book.getTitle(), book.getAuthor(), 
+                    book.getDueDate());
+            }
         } else {
             System.out.println("Member not found!");
         }
     }
 
-    private String getStringInput(String prompt) {
+    private static void addNewBook() {
+        String isbn = getStringInput("Enter ISBN: ");
+        String title = getStringInput("Enter title: ");
+        String author = getStringInput("Enter author: ");
+        String category = getStringInput("Enter category: ");
+        
+        Book book = new Book(isbn, title, author, category);
+        library.addBook(book);
+        System.out.println("Book added successfully!");
+    }
+
+    private static void addNewMember() {
+        String memberId = getStringInput("Enter member ID: ");
+        String name = getStringInput("Enter name: ");
+        
+        Member member = new Member(memberId, name);
+        library.addMember(member);
+        System.out.println("Member added successfully!");
+    }
+
+    private static void initializeSampleData() {
+        Book book1 = new Book("1234", "Java Programming", "John Doe", "Programming");
+        Book book2 = new Book("5678", "Python Basics", "Jane Smith", "Programming");
+        library.addBook(book1);
+        library.addBook(book2);
+
+        Member member1 = new Member("M001", "Alice");
+        Member member2 = new Member("M002", "Bob");
+        library.addMember(member1);
+        library.addMember(member2);
+    }
+
+    private static String getStringInput(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine().trim();
     }
 
-    private int getIntInput(String prompt) {
+    private static int getIntInput(String prompt) {
         while (true) {
             try {
                 System.out.print(prompt);
@@ -139,21 +145,5 @@ public class Main {
                 System.out.println("Please enter a valid number!");
             }
         }
-    }
-
-    private double getDoubleInput(String prompt) {
-        while (true) {
-            try {
-                System.out.print(prompt);
-                return Double.parseDouble(scanner.nextLine().trim());
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid amount!");
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        Main librarySystem = new Main();
-        librarySystem.start();
     }
 }

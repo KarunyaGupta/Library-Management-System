@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
-import java.util.stream.Collectors;
 
 public class Library {
     private List<Book> books;
@@ -14,10 +13,12 @@ public class Library {
 
     public void addBook(Book book) {
         books.add(book);
+        DataManager.saveBooks(books);
     }
 
     public void addMember(Member member) {
         members.add(member);
+        DataManager.saveMembers(members);
     }
 
     public boolean borrowBook(String isbn, String memberId) {
@@ -32,6 +33,8 @@ public class Library {
             if (book.getReservedBy() == member) {
                 member.cancelReservation(book);
             }
+            DataManager.saveBooks(books);
+            DataManager.saveMembers(members);
             return true;
         }
         return false;
@@ -49,18 +52,25 @@ public class Library {
             book.setAvailable(true);
             book.setDueDate(null);
             member.returnBook(book);
+            DataManager.saveBooks(books);
+            DataManager.saveMembers(members);
             return true;
         }
         return false;
     }
 
     public List<Book> searchBooks(String query) {
-        return books.stream()
-            .filter(book -> 
-                book.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                book.getAuthor().toLowerCase().contains(query.toLowerCase()) ||
-                book.getCategory().toLowerCase().contains(query.toLowerCase()))
-            .collect(Collectors.toList());
+        List<Book> results = new ArrayList<>();
+        query = query.toLowerCase();
+        
+        for (Book book : books) {
+            if (book.getTitle().toLowerCase().contains(query) ||
+                book.getAuthor().toLowerCase().contains(query) ||
+                book.getCategory().toLowerCase().contains(query)) {
+                results.add(book);
+            }
+        }
+        return results;
     }
 
     public boolean reserveBook(String isbn, String memberId) {
@@ -74,17 +84,21 @@ public class Library {
         return false;
     }
 
-    public Member findMember(String memberId) {
-        return members.stream()
-            .filter(member -> member.getMemberId().equals(memberId))
-            .findFirst()
-            .orElse(null);
+    public Book findBook(String isbn) {
+        for (Book book : books) {
+            if (book.getIsbn().equals(isbn)) {
+                return book;
+            }
+        }
+        return null;
     }
 
-    private Book findBook(String isbn) {
-        return books.stream()
-            .filter(book -> book.getIsbn().equals(isbn))
-            .findFirst()
-            .orElse(null);
+    public Member findMember(String memberId) {
+        for (Member member : members) {
+            if (member.getMemberId().equals(memberId)) {
+                return member;
+            }
+        }
+        return null;
     }
 }
