@@ -1,5 +1,4 @@
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
 
 public class DataManager {
     // Keep data in memory using ArrayLists

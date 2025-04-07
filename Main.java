@@ -1,5 +1,5 @@
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.List;
 
 public class Main {
     private static Library library;
@@ -42,7 +42,7 @@ public class Main {
 
     private static void searchBooks() {
         String query = getStringInput("Enter search term: ");
-        List<Book> results = library.searchBooks(query);
+        ArrayList<Book> results = library.searchBooks(query);
         
         System.out.println("\nSearch Results:");
         for (Book book : results) {
