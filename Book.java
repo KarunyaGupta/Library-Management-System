@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class Book {
+public class Book implements Comparable<Book> {
     private String isbn;
     private String title;
     private String author;
@@ -30,4 +30,15 @@ public class Book {
     public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
     public Member getReservedBy() { return reservedBy; }
     public void setReservedBy(Member member) { this.reservedBy = member; }
+
+    public boolean matches(String query) {
+        return title.toLowerCase().contains(query) ||
+               author.toLowerCase().contains(query) ||
+               category.toLowerCase().contains(query);
+    }
+
+    @Override
+    public int compareTo(Book other) {
+        return this.title.compareTo(other.title);
+    }
 }

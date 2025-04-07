@@ -6,7 +6,6 @@ public class Main {
     private static Scanner scanner;
 
     public static void main(String[] args) {
-        DataManager.initialize();
         library = new Library();
         scanner = new Scanner(System.in);
 
