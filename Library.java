@@ -5,7 +5,7 @@ public class Library {
     // Remove local ArrayLists since we'll use DataManager
     
     public Library() {
-        // Empty constructor - no need to initialize lists
+        // Empty constructor
     }
 
     public void addBook(Book book) {
