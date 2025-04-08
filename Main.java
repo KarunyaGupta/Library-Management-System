@@ -23,6 +23,9 @@ public class Main {
                 case 4: showMemberDetails(); break;
                 case 5: addNewBook(); break;
                 case 6: addNewMember(); break;
+                case 7: LibraryReport.showAllBooks(); break;
+                case 8: LibraryReport.showAllMembers(); break;
+                case 9: LibraryReport.showOverdueBooks(); break;
                 case 0: System.exit(0); break;
                 default: System.out.println("Invalid choice!");
             }
@@ -37,6 +40,9 @@ public class Main {
         System.out.println("4. Member Details");
         System.out.println("5. Add New Book");
         System.out.println("6. Add New Member");
+        System.out.println("7. Show All Books");
+        System.out.println("8. Show All Members");
+        System.out.println("9. Show Overdue Books");
         System.out.println("0. Exit");
     }
 
@@ -124,8 +130,10 @@ public class Main {
         library.addBook(book1);
         library.addBook(book2);
 
-        Member member1 = new Member("M001", "Alice");
-        Member member2 = new Member("M002", "Bob");
+        Member member1 = new Member("0001", "Karunya");
+        Member member2 = new Member("0002", "Navya");
+        Member member3 = new Member("0003", "Kartik");
+        Member member4 = new Member("0004", "Manvir");
         library.addMember(member1);
         library.addMember(member2);
     }
