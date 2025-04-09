@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-
+import java.util.*;
 public class Main {
     private static Library library;
     private static Scanner scanner;
