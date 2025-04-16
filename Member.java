@@ -52,7 +52,7 @@ public class Member {
     public double calculateFine(Book book) {
         if (book.getDueDate() != null && LocalDate.now().isAfter(book.getDueDate())) {
             long daysOverdue = ChronoUnit.DAYS.between(book.getDueDate(), LocalDate.now());
-            return daysOverdue * 0.50; // $0.50 per day
+            return daysOverdue * 1.0; // $0.50 per day
         }
         return 0.0;
     }
