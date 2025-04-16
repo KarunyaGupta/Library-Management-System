@@ -30,8 +30,12 @@ public class Member {
         borrowedBooks.remove(book);
     }
 
-    public void addFine(double amount) { this.fineAmount += amount; }
-    public void payFine(double amount) { this.fineAmount = Math.max(0, this.fineAmount - amount); }
+    public void addFine(double amount){
+        this.fineAmount += amount;
+    }
+    public void payFine(double amount){
+        this.fineAmount = Math.max(0, this.fineAmount - amount);
+    }
     
     public void reserveBook(Book book) {
         reservedBooks.add(book);

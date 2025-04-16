@@ -20,16 +20,36 @@ public class Book implements Comparable<Book> {
     }
 
     // Getters and setters
-    public String getIsbn() { return isbn; }
-    public String getTitle() { return title; }
-    public String getAuthor() { return author; }
-    public boolean isAvailable() { return isAvailable; }
-    public void setAvailable(boolean available) { isAvailable = available; }
-    public String getCategory() { return category; }
-    public LocalDate getDueDate() { return dueDate; }
-    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
-    public Member getReservedBy() { return reservedBy; }
-    public void setReservedBy(Member member) { this.reservedBy = member; }
+    public String getIsbn(){
+        return isbn;
+    }
+    public String getTitle(){
+        return title;
+    }
+    public String getAuthor(){
+        return author;
+    }
+    public boolean isAvailable(){
+        return isAvailable;
+    }
+    public void setAvailable(boolean available){
+        isAvailable = available;
+    }
+    public String getCategory(){
+        return category;
+    }
+    public LocalDate getDueDate(){
+        return dueDate;
+    }
+    public void setDueDate(LocalDate dueDate){
+        this.dueDate = dueDate;
+    }
+    public Member getReservedBy(){
+        return reservedBy;
+    }
+    public void setReservedBy(Member member){
+        this.reservedBy = member;
+    }
 
     public boolean matches(String query) {
         return title.toLowerCase().contains(query) ||

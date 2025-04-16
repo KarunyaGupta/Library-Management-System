@@ -15,17 +15,38 @@ public class Main {
             int choice = getIntInput("Enter your choice: ");
             
             switch (choice) {
-                case 1: searchBooks(); break;
-                case 2: borrowBook(); break;
-                case 3: returnBook(); break;
-                case 4: showMemberDetails(); break;
-                case 5: addNewBook(); break;
-                case 6: addNewMember(); break;
-                case 7: LibraryReport.showAllBooks(); break;
-                case 8: LibraryReport.showAllMembers(); break;
-                case 9: LibraryReport.showOverdueBooks(); break;
-                case 0: System.exit(0); break;
-                default: System.out.println("Invalid choice!");
+                case 1: 
+                    searchBooks();
+                    break;
+                case 2:
+                    borrowBook();
+                    break;
+                case 3:
+                    returnBook();
+                    break;
+                case 4:
+                    showMemberDetails();
+                    break;
+                case 5:
+                    addNewBook();
+                    break;
+                case 6:
+                    addNewMember();
+                    break;
+                case 7: 
+                    LibraryReport.showAllBooks();
+                    break;
+                case 8:
+                    LibraryReport.showAllMembers();
+                    break;
+                case 9: 
+                    LibraryReport.showOverdueBooks();
+                    break;
+                case 0:
+                    System.exit(0);
+                    break;
+                default: 
+                    System.out.println("Invalid choice!");
             }
         }
     }
