@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.time.*;
 
 public class Member {
     private String memberId;
@@ -47,13 +47,5 @@ public class Member {
         if (book.getReservedBy() == this) {
             book.setReservedBy(null);
         }
-    }
-    
-    public double calculateFine(Book book) {
-        if (book.getDueDate() != null && LocalDate.now().isAfter(book.getDueDate())) {
-            long daysOverdue = ChronoUnit.DAYS.between(book.getDueDate(), LocalDate.now());
-            return daysOverdue * 1.0; // $0.50 per day
-        }
-        return 0.0;
     }
 }
