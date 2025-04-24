@@ -36,7 +36,7 @@ public class DataManager {
 
     // Find member by ID
     public static Member findMember(String memberId) {
-        for (Member member : memberList) {
+        for (Member member : memberList){
             if (member.getMemberId().equals(memberId)) {
                 return member;
             }

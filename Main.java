@@ -144,17 +144,25 @@ public class Main {
     }
 
     private static void initializeSampleData() {
-        Book book1 = new Book("1234", "Java Programming", "John Doe", "Programming");
-        Book book2 = new Book("5678", "Python Basics", "Jane Smith", "Programming");
+        Book book1 = new Book("0001", "Java Programming", "John Doe", "Programming");
+        Book book2 = new Book("0002", "Python Basics", "Jane Smith", "Programming");
+        Book book3 = new Book("0003", "Data Structures", "Alice Johnson", "Computer Science");
+        Book book4 = new Book("0004", "Algorithms", "Bob Brown", "Computer Science");
+        Book book5 = new Book("0005", "Database Systems", "Charlie White", "Database");
         library.addBook(book1);
         library.addBook(book2);
+        library.addBook(book3);
+        library.addBook(book4);
+        library.addBook(book5);
 
-        Member member1 = new Member("0001", "Karunya");
-        Member member2 = new Member("0002", "Navya");
-        Member member3 = new Member("0003", "Kartik");
-        Member member4 = new Member("0004", "Manvir");
+        Member member1 = new Member("1", "Karunya");
+        Member member2 = new Member("2", "Navya");
+        Member member3 = new Member("3", "Kartik");
+        Member member4 = new Member("4", "Manvir");
         library.addMember(member1);
         library.addMember(member2);
+        library.addMember(member3);
+        library.addMember(member4);
     }
 
     private static String getStringInput(String prompt) {

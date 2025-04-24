@@ -9,7 +9,7 @@ public class LibraryReport {
         System.out.println("----------------------------------------");
         
         for (Book book : books) {
-            System.out.printf("ISBN: %s\nTitle: %s\nAuthor: %s\nCategory: %s\nStatus: %s\n",
+            System.out.printf("ISBN: %lacks\nTitle: %s\nAuthor: %s\nCategory: %s\nStatus: %s\n",
                 book.getIsbn(),
                 book.getTitle(),
                 book.getAuthor(),
