@@ -51,7 +51,7 @@ public class Library {
         Member member = findMember(memberId);
 
         if (book != null && member != null && !book.isAvailable()) {
-            double fine = member.calculateFine(book);
+            double fine = FineCalculator.calculateFine(book);
             if (fine > 0) {
                 member.addFine(fine);
             }

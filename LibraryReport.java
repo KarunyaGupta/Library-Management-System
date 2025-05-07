@@ -9,7 +9,7 @@ public class LibraryReport {
         System.out.println("----------------------------------------");
         
         for (Book book : books) {
-            System.out.printf("ISBN: %lacks\nTitle: %s\nAuthor: %s\nCategory: %s\nStatus: %s\n",
+            System.out.printf("ISBN: %s\nTitle: %s\nAuthor: %s\nCategory: %s\nStatus: %s\n",
                 book.getIsbn(),
                 book.getTitle(),
                 book.getAuthor(),
@@ -59,7 +59,7 @@ public class LibraryReport {
         boolean hasOverdue = false;
         for (Member member : members) {
             for (Book book : member.getBorrowedBooks()) {
-                double fine = member.calculateFine(book);
+                double fine = FineCalculator.calculateFine(book);
                 if (fine > 0) {
                     hasOverdue = true;
                     System.out.printf("Book: %s\nBorrowed by: %s\nDue Date: %s\nFine: $%.2f\n",
