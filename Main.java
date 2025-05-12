@@ -78,13 +78,19 @@ public class Main {
     }
 
     private static void borrowBook() {
-        String isbn = getStringInput("Enter book ISBN: ");
-        String memberId = getStringInput("Enter member ID: ");
-        
-        if (library.borrowBook(isbn, memberId)) {
-            System.out.println("Book borrowed successfully!");
-        } else {
-            System.out.println("Failed to borrow book. Please check ISBN and member ID.");
+        try {
+            String isbn = getStringInput("Enter book ISBN: ");
+            String memberId = getStringInput("Enter member ID: ");
+            
+            if (library.borrowBook(isbn, memberId)) {
+                System.out.println("Book borrowed successfully!");
+            } else {
+                System.out.println("Failed to borrow book. Book may not be available.");
+            }
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred.");
         }
     }
 
@@ -124,14 +130,23 @@ public class Main {
     }
 
     private static void addNewBook() {
-        String isbn = getStringInput("Enter ISBN: ");
-        String title = getStringInput("Enter title: ");
-        String author = getStringInput("Enter author: ");
-        String category = getStringInput("Enter category: ");
-        
-        Book book = new Book(isbn, title, author, category);
-        library.addBook(book);
-        System.out.println("Book added successfully!");
+        try {
+            String isbn = getStringInput("Enter ISBN: ");
+            if (!isbn.matches("^[0-9]{4}$")) {
+                System.out.println("Invalid ISBN format. Please use 4 digits.");
+                return;
+            }
+            
+            String title = getStringInput("Enter title: ");
+            String author = getStringInput("Enter author: ");
+            String category = getStringInput("Enter category: ");
+            
+            Book book = new Book(isbn, title, author, category);
+            library.addBook(book);
+            System.out.println("Book added successfully!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private static void addNewMember() {
