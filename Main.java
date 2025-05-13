@@ -78,7 +78,7 @@ public class Main {
     }
 
     private static void borrowBook() {
-d        String isbn = getStringInput("Enter book ISBN: ");
+        String isbn = getStringInput("Enter book ISBN: ");
         String memberId = getStringInput("Enter member ID: ");
         
         if (library.borrowBook(isbn, memberId)) {
