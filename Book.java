@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-
 public class Book implements Comparable<Book> {
     private String isbn;
     private String title;
